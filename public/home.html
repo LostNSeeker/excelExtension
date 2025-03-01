@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Financial AI Assistant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+    <script src="app.js"></script>
+</head>
+<body class="ms-font-m ms-Fabric">
+    <header class="ms-bgColor-themePrimary ms-fontColor-white">
+        <h1 class="ms-font-xl">Financial AI Assistant</h1>
+    </header>
+    <main>
+        <div id="tabs" class="ms-Pivot">
+            <ul class="ms-Pivot-links">
+                <li id="tab-formula" class="ms-Pivot-link ms-Pivot-link--selected">Formula Assistant</li>
+                <li id="tab-chat" class="ms-Pivot-link">AI Chat</li>
+                <li id="tab-models" class="ms-Pivot-link">Financial Models</li>
+                <li id="tab-pdf" class="ms-Pivot-link">PDF Extraction</li>
+            </ul>
+            
+            <!-- Formula Assistant Tab -->
+            <div class="ms-Pivot-content" id="formula-content">
+                <h2 class="ms-font-l">Formula Assistant</h2>
+                <p>Get help with Excel formulas for financial analysis.</p>
+                <div class="form-group">
+                    <label class="ms-font-m">Describe what you're trying to calculate:</label>
+                    <textarea id="formula-query" class="ms-TextField-field" placeholder="e.g., Calculate the weighted average cost of capital"></textarea>
+                    <button id="get-formula" class="ms-Button ms-Button--primary">
+                        <span class="ms-Button-label">Get Formula Help</span>
+                    </button>
+                </div>
+                <div id="formula-response" class="response-area"></div>
+            </div>
+            
+            <!-- AI Chat Tab -->
+            <div class="ms-Pivot-content hidden" id="chat-content">
+                <h2 class="ms-font-l">AI Chat</h2>
+                <p>Ask questions about financial modeling and Excel techniques.</p>
+                <div id="chat-messages" class="chat-container"></div>
+                <div class="form-group chat-input-container">
+                    <input id="chat-input" class="ms-TextField-field" placeholder="Type your question here...">
+                    <button id="send-chat" class="ms-Button ms-Button--primary">
+                        <span class="ms-Button-label">Send</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Financial Models Tab -->
+            <div class="ms-Pivot-content hidden" id="models-content">
+                <h2 class="ms-font-l">Financial Model Templates</h2>
+                <p>Create professional financial models with AI assistance.</p>
+                <div class="models-grid">
+                    <div class="model-card" data-model="dcf">
+                        <h3 class="ms-font-m">Discounted Cash Flow (DCF)</h3>
+                        <p>Valuation model based on future cash flow projections.</p>
+                        <button class="ms-Button">
+                            <span class="ms-Button-label">Create</span>
+                        </button>
+                    </div>
+                    <div class="model-card" data-model="lbo">
+                        <h3 class="ms-font-m">Leveraged Buyout (LBO)</h3>
+                        <p>Model for acquisition using significant debt.</p>
+                        <button class="ms-Button">
+                            <span class="ms-Button-label">Create</span>
+                        </button>
+                    </div>
+                    <div class="model-card" data-model="merger">
+                        <h3 class="ms-font-m">Merger Model</h3>
+                        <p>Analysis of financial impact of merging companies.</p>
+                        <button class="ms-Button">
+                            <span class="ms-Button-label">Create</span>
+                        </button>
+                    </div>
+                    <div class="model-card" data-model="custom">
+                        <h3 class="ms-font-m">Custom Model</h3>
+                        <p>Create a custom financial model with AI guidance.</p>
+                        <button class="ms-Button">
+                            <span class="ms-Button-label">Create</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PDF Extraction Tab -->
+            <div class="ms-Pivot-content hidden" id="pdf-content">
+                <h2 class="ms-font-l">PDF Data Extraction</h2>
+                <p>Extract financial data from PDF documents and import to Excel.</p>
+                <div class="form-group">
+                    <label class="ms-font-m">Upload PDF:</label>
+                    <input type="file" id="pdf-file" accept=".pdf">
+                    <button id="extract-pdf" class="ms-Button ms-Button--primary">
+                        <span class="ms-Button-label">Extract Data</span>
+                    </button>
+                </div>
+                <div id="pdf-result" class="response-area"></div>
+            </div>
+        </div>
+    </main>
+    <footer class="ms-bgColor-themeLighter">
+        <p>Financial AI Assistant v1.0</p>
+    </footer>
+</body>
+</html>

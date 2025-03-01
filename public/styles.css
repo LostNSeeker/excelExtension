@@ -1,0 +1,184 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+header {
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+main {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+footer {
+    padding: 10px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.ms-TextField-field,
+textarea.ms-TextField-field {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    min-height: 60px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.ms-Button {
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.ms-Button--primary {
+    background-color: #0078d4;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+
+.ms-Button--primary:hover {
+    background-color: #106ebe;
+}
+
+.response-area {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    min-height: 100px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.hidden {
+    display: none;
+}
+
+.ms-Pivot {
+    margin-bottom: 20px;
+}
+
+.ms-Pivot-links {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+.ms-Pivot-link {
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ms-Pivot-link:hover {
+    background-color: #f0f0f0;
+}
+
+.ms-Pivot-link--selected {
+    border-bottom: 2px solid #0078d4;
+    font-weight: bold;
+}
+
+.ms-Pivot-content {
+    padding: 15px 0;
+}
+
+.chat-container {
+    height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+}
+
+.chat-message {
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    max-width: 80%;
+    clear: both;
+}
+
+.chat-message.user {
+    background-color: #e6f2ff;
+    float: right;
+}
+
+.chat-message.assistant {
+    background-color: #f0f0f0;
+    float: left;
+}
+
+.chat-input-container {
+    display: flex;
+    margin-top: 10px;
+}
+
+.chat-input-container .ms-TextField-field {
+    flex: 1;
+    margin-right: 10px;
+    min-height: unset;
+}
+
+.models-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.model-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.model-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.model-card h3 {
+    margin-top: 0;
+    color: #0078d4;
+}
+
+.model-card p {
+    min-height: 60px;
+    color: #555;
+}
+
+pre {
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-radius: 4px;
+    overflow-x: auto;
+}
+
+.error {
+    color: #d83b01;
+}
