@@ -177,16 +177,30 @@ function extractFinancialData(text) {
         financial_data: {
             income_statement: {
                 revenue: revenue || 0,
+                cost_of_revenue: revenue ? revenue * 0.6 : 0, // Assumption for MVP
+                gross_profit: revenue ? revenue * 0.4 : 0, // Assumption for MVP
+                operating_expenses: revenue ? revenue * 0.25 : 0, // Assumption for MVP
+                operating_income: revenue ? revenue * 0.15 : 0, // Assumption for MVP
                 net_income: netIncome || 0
             },
             balance_sheet: {
                 total_assets: totalAssets || 0,
                 total_liabilities: totalLiabilities || 0,
-                total_equity: totalEquity || 0
+                total_equity: totalEquity || 0,
+                cash: totalAssets ? totalAssets * 0.1 : 0 // Assumption for MVP
+            },
+            cash_flow: {
+                operating_cash_flow: netIncome ? netIncome * 1.2 : 0, // Assumption for MVP
+                investing_cash_flow: netIncome ? netIncome * -0.8 : 0, // Assumption for MVP
+                financing_cash_flow: netIncome ? netIncome * -0.2 : 0, // Assumption for MVP
+                net_change_in_cash: netIncome ? netIncome * 0.2 : 0 // Assumption for MVP
             }
         },
         key_ratios: {
-            profit_margin: profitMargin || 0
+            profit_margin: profitMargin || 0,
+            return_on_assets: (netIncome && totalAssets) ? netIncome / totalAssets : 0,
+            debt_to_equity: (totalLiabilities && totalEquity) ? totalLiabilities / totalEquity : 0,
+            current_ratio: 1.8 // Default for MVP
         }
     };
 }
@@ -250,6 +264,91 @@ app.get('/api/model-templates/:type', (req, res) => {
     }
     
     res.json(templates[type]);
+});
+
+// Market Data API Endpoint
+app.post('/api/market-data', async (req, res) => {
+    try {
+        const { symbols, startDate, endDate } = req.body;
+        
+        if (!symbols || !Array.isArray(symbols) || symbols.length === 0) {
+            return res.status(400).json({ error: 'Valid symbols array is required' });
+        }
+        
+        // In a real implementation, this would call an external market data API
+        // For the MVP, we'll return mock data
+        const mockData = {
+            data: symbols.map(symbol => ({
+                symbol,
+                prices: generateMockPriceData(startDate, endDate)
+            }))
+        };
+        
+        res.json(mockData);
+    } catch (error) {
+        console.error('Error fetching market data:', error);
+        res.status(500).json({ error: 'Failed to fetch market data' });
+    }
+});
+
+// Generate mock price data for MVP
+function generateMockPriceData(startDate, endDate) {
+    const prices = [];
+    const start = startDate ? new Date(startDate) : new Date('2023-01-01');
+    const end = endDate ? new Date(endDate) : new Date();
+    
+    let currentDate = new Date(start);
+    let price = 100 + Math.random() * 100; // Random starting price between 100-200
+    
+    while (currentDate <= end) {
+        // Skip weekends
+        if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
+            const dailyChange = (Math.random() - 0.5) * 5; // Random daily change between -2.5% and +2.5%
+            price = price * (1 + dailyChange / 100);
+            
+            prices.push({
+                date: currentDate.toISOString().split('T')[0],
+                open: price * (1 - Math.random() * 0.01),
+                high: price * (1 + Math.random() * 0.02),
+                low: price * (1 - Math.random() * 0.02),
+                close: price,
+                volume: Math.floor(Math.random() * 10000000) + 1000000
+            });
+        }
+        
+        // Move to next day
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+    
+    return prices;
+}
+
+// Forecasting API Endpoint
+app.post('/api/forecast', async (req, res) => {
+    try {
+        const { historicalData, forecastPeriod, options } = req.body;
+        
+        if (!historicalData || !Array.isArray(historicalData) || historicalData.length < 2) {
+            return res.status(400).json({ error: 'Valid historical data array with at least 2 points is required' });
+        }
+        
+        const periods = forecastPeriod || 5;
+        const forecastOptions = options || { method: 'linear' };
+        
+        // Import the forecasting service
+        const forecastingService = require('./services/forecasting');
+        
+        // Generate forecast
+        const forecast = forecastingService.generateForecast(historicalData, {
+            periods,
+            ...forecastOptions
+        });
+        
+        res.json(forecast);
+    } catch (error) {
+        console.error('Error generating forecast:', error);
+        res.status(500).json({ error: 'Failed to generate forecast' });
+    }
 });
 
 // Start the server
